@@ -465,7 +465,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: shaikmustafa/loadgenerator:latest
+        image: harini502/loadgenerator:v1
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
