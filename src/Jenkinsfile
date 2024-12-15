@@ -2,20 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage("Build") {
+        stage('Build & Tag Docker Image') {
             steps {
-               sh 'docker build -t harini502/cartservice:v1 .'
+                script {
+                    dir('src') {
+
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh "docker build -t harini502/cartservice:v1 ."
+                    }
+                        }
+                }
             }
         }
-        stage("push") {
+        stage('Push Docker Image') {
             steps {
-               script{
-                   withDockerRegistry(credentialsId: 'docker-cred') {
-                        sh 'docker push harini502/cartservice:v1'
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh "docker push harini502/cartservice:v1 "
                     }
-               }
+                }
             }
         }
     }
 }
-
